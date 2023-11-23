@@ -161,7 +161,7 @@ class xBDataset(data.Dataset):
         self.label_transform = label_transform
         self.split = split
 
-        train_dirs = ['../data/train'] # fix path!!
+        train_dirs = ['data/xbd/train'] # fix path!!
         all_files = []
         for d in train_dirs:
             for f in sorted(os.listdir(os.path.join(d, 'images'))):
@@ -222,11 +222,12 @@ class xBDatasetMulti(data.Dataset):
         self.label_transform = label_transform
         self.split = split
 
-        train_dirs = ['../data/xbd/train'] # fix path!!
+        train_dirs = [f'{self.root_dir}/train', f'{self.root_dir}/tier3', f'{self.root_dir}/test', f'{self.root_dir}/hold'] # fix path!!
         all_files = []
         for d in train_dirs:
             for f in sorted(os.listdir(os.path.join(d, 'images'))):
-                if ('_pre_disaster.png' in f) and (('hurricane-harvey' in f) | ('hurricane-michael' in f) | ('mexico-earthquake' in f) | ('tuscaloosa-tornado' in f) | ('palu-tsunami' in     f)):
+                # if ('_pre_disaster.png' in f) and (('hurricane-harvey' in f) | ('hurricane-michael' in f) | ('mexico-earthquake' in f) | ('tuscaloosa-tornado' in f) | ('palu-tsunami' in     f)):
+                if '_pre_disaster.png' in f:
                     all_files.append(os.path.join(d, 'images', f))
 
         # Upsampling
@@ -263,9 +264,9 @@ class xBDatasetMulti(data.Dataset):
         label = cv2.imread(fn.replace('/images/', '/masks/').replace('_pre_disaster', '_post_disaster'), cv2.IMREAD_UNCHANGED)
 
         if self.split == 'train':
-            [img, img_B], [label] = self.augm.transform([img, img_B], [label], to_tensor=self.to_tensor, is_train=True)
+            [img, img_B], [label] = self.augm.transform([img, img_B], [label], to_tensor=self.to_tensor)
         else:
-            [img, img_B], [label] = self.augm.transform([img, img_B], [label], to_tensor=self.to_tensor, is_train=False)
+            [img, img_B], [label] = self.augm.transform([img, img_B], [label], to_tensor=self.to_tensor)
 
         name = fn.split('/')[-1]
         return {'name': fn, 'A': img, 'B': img_B, 'L': label}
