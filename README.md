@@ -14,7 +14,9 @@ Arxiv link: https://arxiv.org/abs/2208.02205
 
 #### Average Quantitative Results for Change Detection: LEVIR-CD dataset
 ![alt text](report/LEVIR_results.png)
-
+## Weights
+Model trained on xBD dataset for 120 epochs. [Weights](https://drive.google.com/file/d/1Ck9zpz0l9FtQnyv-fDbbBGlX9_6C1Lc_/view?usp=sharing)\
+See logs here [Log file ](checkpoints/xBD_base_transformer_pos_s4_dd8_o5_xBDataset_b4_lr0.001_train_val_200_linear_ce_smoothen/log.txt)
 
 ## Training the model
 
